@@ -1,0 +1,2 @@
+Prefix plugins/DESeq2TXT/example
+Plugin DESeq2TXT inputfile parameters.deseq2txt.txt outputfile deseq.stats.txt

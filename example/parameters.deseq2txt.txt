@@ -1,0 +1,5 @@
+taxa	taxa.csv
+deseq	deseq.csv
+group1	A
+group2	B
+pvalue	0.05
