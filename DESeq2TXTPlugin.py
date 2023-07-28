@@ -26,17 +26,27 @@ class DESeq2TXTPlugin:
       idx = contents2.index("\"pvalue\"")
       idx2 = contents2.index("\"log2FoldChange\"")
       outfile = open(filename, 'w')
+      outfile.write("Taxon\tGroup\tLogFoldChange\tPValue\n")
+      listResults = []
       for line in self.deseqfile:
           contents = line.strip().split(',')
           if (contents[idx] != "NA"):
              pvalue = float(contents[idx])
-             if (pvalue <= self.pvalue):
-                index = contents[0]
-                index = index[1:len(index)-1]
-                index = int(index)
-                printstring = str(self.taxa[index])+"\t"+str(contents[idx2])
-                if (float(contents[idx2]) < 0):
+             index = contents[0]
+             index = index[1:len(index)-1]
+             index = int(index)
+             printstring = str(self.taxa[index])#+"\t"+str(contents[idx2])
+             group = "0"
+             if (float(contents[idx2]) < 0):
                     printstring += "\t"+self.group1
-                else:
+                    group = self.group1
+             else:
                     printstring += "\t"+self.group2
+                    group = self.group2
+             printstring += "\t"+contents[idx2]
+             printstring += "\t"+str(pvalue)
+             if (pvalue <= self.pvalue):
                 outfile.write(printstring+"\n")
+             listResults.append((pvalue, self.taxa[index], group))
+      listResults.sort()
+      #print(listResults)
